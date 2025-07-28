@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        Office.onReady(() => {
+            console.log('Commands.html loaded');
+            updateButtonStates(false);
+        });
+
+        async function updateButtonStates(isEnabled) {
+            Excel.run(async (context) => {
+                const range = context.workbook.worksheets.getActiveWorksheet().getCell(0, 6);
+                range.values = [['updateButtonStates: ' + isEnabled]];
+                await context.sync();
+            }).catch(() => {});
+    
+            // Try the modern ribbon API first
+            if (Office.ribbon && Office.ribbon.requestUpdate) {
+                try {
+                    await Office.ribbon.requestUpdate({
+                        tabs: [{
+                            id: "MyCustomTab",
+                            groups: [{
+                                id: "CommandsGroup",
+                                controls: [{
+                                    id: "SecondButton",
+                                    enabled: isEnabled
+                                }, {
+                                    id: "ThirdButton", 
+                                    enabled: isEnabled
+                                }]
+                            }]
+                        }]
+                    });
+                    Excel.run(async (context) => {
+                        const range = context.workbook.worksheets.getActiveWorksheet().getCell(1, 6);
+                        range.values = [['Ribbon update requested']];
+                        await context.sync();
+                    }).catch(() => {});
+                } catch (error) {
+                    Excel.run(async (context) => {
+                        const range = context.workbook.worksheets.getActiveWorksheet().getCell(1, 6);
+                        range.values = [['Ribbon update failed: ' + error.message]];
+                        await context.sync();
+                    }).catch(() => {});
+                }
+            } else {
+                Excel.run(async (context) => {
+                    const range = context.workbook.worksheets.getActiveWorksheet().getCell(1, 6);
+                    range.values = [['Ribbon API not available']];
+                    await context.sync();
+                }).catch(() => {});
+            }
+        }
+
+
+        function first(event) {
+            console.log('First button clicked');
+            Excel.run(async (context) => {
+                const range = context.workbook.getSelectedRange();
+                range.values = [["First button clicked - buttons enabled"]];
+                await context.sync();
+                await updateButtonStates(true);
+                event.completed();
+            }).catch((error) => {
+                console.error(error);
+                event.completed();
+            });
+        }
+
+        function second(event) {
+            console.log('Second button clicked');
+            Excel.run(async (context) => {
+                const range = context.workbook.getSelectedRange();
+                range.format.fill.color = "yellow";
+                await context.sync();
+                event.completed();
+            }).catch((error) => {
+                console.error(error);
+                event.completed();
+            });
+        }
+
+        function third(event) {
+            console.log('Third button clicked');
+            Excel.run(async (context) => {
+                const range = context.workbook.getSelectedRange();
+                range.format.fill.color = "red";
+                await context.sync();
+                event.completed();
+            }).catch((error) => {
+                console.error(error);
+                event.completed();
+            });
+        }
+
+        function fourth(event) {
+            console.log('Fourth button clicked');
+            Excel.run(async (context) => {
+                const range = context.workbook.getSelectedRange();
+                range.values = [["Fourth button clicked - buttons disabled"]];
+                await context.sync();
+                updateButtonStates(false);
+                event.completed();
+            }).catch((error) => {
+                console.error(error);
+                event.completed();
+            });
+        }
+
+        Office.actions.associate("first", first);
+        Office.actions.associate("second", second);
+        Office.actions.associate("third", third);
+        Office.actions.associate("fourth", fourth);
+    </script>
+</body>
+</html>

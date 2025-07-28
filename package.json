@@ -1,0 +1,14 @@
+{
+  "name": "office-addin-project",
+  "version": "1.0.0",
+  "description": "Office.js add-in with ribbon buttons",
+  "main": "taskpane.html",
+  "scripts": {
+    "start": "office-addin-dev-server --source . --port 3000",
+    "validate": "office-addin-manifest validate manifest.xml"
+  },
+  "devDependencies": {
+    "office-addin-dev-server": "^1.0.0",
+    "office-addin-manifest": "^1.0.0"
+  }
+}
