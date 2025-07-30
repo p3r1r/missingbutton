@@ -109,6 +109,25 @@
                     <FunctionName>second</FunctionName>
                   </Action>
                 </Control>
+
+                <!-- For example this button is not yet in the manifest of our users.
+                <Control xsi:type="Button" id="MidleButton">
+                  <Label resid="MiddleButton.Label" />
+                  <Supertip>
+                    <Title resid="MiddleButton.Label" />
+                    <Description resid="MiddleButton.Tooltip" />
+                  </Supertip>
+                  <Enabled>false</Enabled>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16" />
+                    <bt:Image size="32" resid="Icon.32x32" />
+                    <bt:Image size="80" resid="Icon.80x80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>middle</FunctionName>
+                  </Action>
+                </Control>
+                -->
                 
                 <Control xsi:type="Button" id="ThirdButton">
                   <Label resid="ThirdButton.Label" />
@@ -166,16 +185,18 @@
         <bt:String id="TaskpaneGroup.Label" DefaultValue="View" />
         <bt:String id="CommandsGroup.Label" DefaultValue="Actions" />
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane" />
-        <bt:String id="FirstButton.Label" DefaultValue="First" />
+        <bt:String id="FirstButton.Label" DefaultValue="Enable" />
         <bt:String id="SecondButton.Label" DefaultValue="Second" />
+        <!-- <bt:String id="MiddleButton.Label" DefaultValue="Middle" /> -->
         <bt:String id="ThirdButton.Label" DefaultValue="Third" />
-        <bt:String id="FourthButton.Label" DefaultValue="Fourth" />
+        <bt:String id="FourthButton.Label" DefaultValue="Disable" />
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Taskpane' button to get started." />
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show the Taskpane" />
         <bt:String id="FirstButton.Tooltip" DefaultValue="Click to Execute First Action" />
         <bt:String id="SecondButton.Tooltip" DefaultValue="Click to Execute Second Action" />
+        <!-- <bt:String id="MiddleButton.Tooltip" DefaultValue="Click to Execute First Action" /> -->
         <bt:String id="ThirdButton.Tooltip" DefaultValue="Click to Execute Third Action" />
         <bt:String id="FourthButton.Tooltip" DefaultValue="Click to Execute Fourth Action" />
       </bt:LongStrings>
